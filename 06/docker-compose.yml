@@ -1,0 +1,6 @@
+services:
+  web:
+    build: ../06 # Direction of the dockerfile
+    command: node app.js # Command to run the application
+    ports:
+      - "8080:8080" # Machine Port: Virtual Port
