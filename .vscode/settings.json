@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/yamllint.json": [
+            "file:///mnt/3e0cacc7-1962-4e46-b62e-d2e5edc0449e/docker_learn/09/deploy.yml",
+            "file:///mnt/3e0cacc7-1962-4e46-b62e-d2e5edc0449e/docker_learn/07/deploy.yml"
+        ]
+    }
+}

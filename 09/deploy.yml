@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timeserver
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      pod: timeserver-pod
+  strategy: #determines the no. of instances that can be available or be created during roll back
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        pod: timeserver-pod
+    spec:
+      containers:
+        - name: timeserver-container
+          image: docker.io/wdenniss/timeserver:1
+          readinessProbe: #Two types of Probe, Readiness & Liveness 
+            initialDelaySeconds: 15   #Responsible for checking whether the instance is able to handle API requests
+            periodSeconds: 30
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            timeoutSeconds: 2
+            failureThreshold: 1
+            successThreshold: 1
+          livenessProbe:  #Responsible for checking whether the container has been started or not
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            httpGet: 
+              path: /
+              port: 80
+              scheme: HTTP
+            timeoutSeconds: 5
+            failureThreshold: 10
+            successThreshold: 1
+
+
+#Assignment
+# Create a server and do health chechs, both Liveness & Readiness
+# Put forward a Rolling Strategy: Rolling update (mostly used), Rolling re-create, Rolling Blue-green (External tool like lstio is used here, no inbuilt support, for Large deployments)
